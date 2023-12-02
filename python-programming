@@ -1,1 +1,297 @@
+#-------------------TO DO LIST--------------------#
+class ToDoList:
+    def __init__(self):
+        self.tasks = []
 
+    def add_task(self, task):
+        self.tasks.append(task)
+        print(f'Task "{task}" added successfully.')
+
+    def view_tasks(self):
+        if not self.tasks:
+            print("No tasks available.")
+        else:
+            print("\n===== Tasks =====")
+            for index, task in enumerate(self.tasks, start=1):
+                print(f"{index}. {task}")
+
+    def update_task(self, index, new_task):
+        if 1 <= index <= len(self.tasks):
+            self.tasks[index - 1] = new_task
+            print(f'Task #{index} updated successfully.')
+        else:
+            print("Invalid task index.")
+
+    def delete_task(self, index):
+        if 1 <= index <= len(self.tasks):
+            del self.tasks[index - 1]
+            print(f'Task #{index} deleted successfully.')
+        else:
+            print("Invalid task index.")
+
+
+def main():
+    todo_list = ToDoList()
+
+    while True:
+        print("\n===== To-Do List Menu =====")
+        print("1. Add Task")
+        print("2. View Tasks")
+        print("3. Update Task")
+        print("4. Delete Task")
+        print("5. Exit")
+
+        choice = input("Enter your choice (1-5): ")
+
+        if choice == "1":
+            task = input("Enter the task: ")
+            todo_list.add_task(task)
+        elif choice == "2":
+            todo_list.view_tasks()
+        elif choice == "3":
+            index = int(input("Enter the task index to update: "))
+            new_task = input("Enter the new task: ")
+            todo_list.update_task(index, new_task)
+        elif choice == "4":
+            index = int(input("Enter the task index to delete: "))
+            todo_list.delete_task(index)
+        elif choice == "5":
+            print("Exiting the To-Do List application. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 5.")
+
+
+if __name__ == "__main__":
+    main()
+
+#--------------CALCULATOR--------------------------#
+
+def add(x, y):
+    return x + y
+
+def subtract(x, y):
+    return x - y
+
+def multiply(x, y):
+    return x * y
+
+def divide(x, y):
+    if y != 0:
+        return x / y
+    else:
+        return "Error: Division by zero"
+
+def calculator():
+    print("Simple Calculator")
+
+    # Input
+    try:
+        num1 = float(input("Enter the first number: "))
+        num2 = float(input("Enter the second number: "))
+    except ValueError:
+        print("Invalid input. Please enter valid numbers.")
+        return
+
+    operation = input("Select operation (+, -, *, /): ")
+
+    # Calculation
+    if operation == '+':
+        result = add(num1, num2)
+    elif operation == '-':
+        result = subtract(num1, num2)
+    elif operation == '*':
+        result = multiply(num1, num2)
+    elif operation == '/':
+        result = divide(num1, num2)
+    else:
+        print("Invalid operation. Please select +, -, *, or /.")
+        return
+
+    # Display result
+    print(f"Result: {result}")
+
+if __name__ == "__main__":
+    calculator()
+#-----------------------PASSWORD GENERATOR---------------------#
+import random
+import string
+
+def generate_password(length):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choice(characters) for _ in range(length))
+    return password
+
+def password_generator():
+    print("Password Generator")
+
+    # Input
+    try:
+        length = int(input("Enter the desired length of the password: "))
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+        return
+
+    # Generate Password
+    if length <= 0:
+        print("Invalid password length. Please enter a positive number.")
+        return
+    else:
+        password = generate_password(length)
+
+    # Display Password
+    print(f"Generated Password: {password}")
+
+if __name__ == "__main__":
+    password_generator()
+
+#--------------------ROCK PAPERS SCISSORS GAME-----------------#
+import random
+
+def get_user_choice():
+    user_choice = input("Choose rock, paper, or scissors: ").lower()
+    while user_choice not in ['rock', 'paper', 'scissors']:
+        print("Invalid choice. Please choose rock, paper, or scissors.")
+        user_choice = input("Choose rock, paper, or scissors: ").lower()
+    return user_choice
+
+def get_computer_choice():
+    return random.choice(['rock', 'paper', 'scissors'])
+
+def determine_winner(user_choice, computer_choice):
+    if user_choice == computer_choice:
+        return 'Tie'
+    elif (
+        (user_choice == 'rock' and computer_choice == 'scissors') or
+        (user_choice == 'scissors' and computer_choice == 'paper') or
+        (user_choice == 'paper' and computer_choice == 'rock')
+    ):
+        return 'You win!'
+    else:
+        return 'Computer wins!'
+
+def rock_paper_scissors_game():
+    print("Rock-Paper-Scissors Game")
+
+    user_score = 0
+    computer_score = 0
+
+    while True:
+        user_choice = get_user_choice()
+        computer_choice = get_computer_choice()
+
+        print(f"\nYou chose: {user_choice}")
+        print(f"Computer chose: {computer_choice}")
+
+        result = determine_winner(user_choice, computer_choice)
+        print(f"Result: {result}")
+
+        if result == 'You win!':
+            user_score += 1
+        elif result == 'Computer wins!':
+            computer_score += 1
+
+        print(f"Score - You: {user_score}  Computer: {computer_score}")
+
+        play_again = input("Do you want to play again? (yes/no): ").lower()
+        if play_again != 'yes':
+            print("Thanks for playing! Goodbye!")
+            break
+
+if __name__ == "__main__":
+    rock_paper_scissors_game()
+
+
+#----------------------CONTACT BOOK------------------#
+class ContactBook:
+    def __init__(self):
+        self.contacts = []
+
+    def add_contact(self, name, phone_number, email, address):
+        contact = {
+            'name': name,
+            'phone_number': phone_number,
+            'email': email,
+            'address': address
+        }
+        self.contacts.append(contact)
+        print(f"Contact added successfully: {name}")
+
+    def view_contact_list(self):
+        if not self.contacts:
+            print("Contact list is empty.")
+        else:
+            print("\n===== Contact List =====")
+            for contact in self.contacts:
+                print(f"Name: {contact['name']}, Phone: {contact['phone_number']}")
+
+    def search_contact(self, keyword):
+        results = [contact for contact in self.contacts if keyword.lower() in contact['name'].lower() or keyword in contact['phone_number']]
+        if not results:
+            print(f"No contacts found for '{keyword}'.")
+        else:
+            print(f"\n===== Search Results for '{keyword}' =====")
+            for result in results:
+                print(f"Name: {result['name']}, Phone: {result['phone_number']}")
+
+    def update_contact(self, name, new_phone_number, new_email, new_address):
+        for contact in self.contacts:
+            if contact['name'].lower() == name.lower():
+                contact['phone_number'] = new_phone_number
+                contact['email'] = new_email
+                contact['address'] = new_address
+                print(f"Contact updated successfully: {name}")
+                return
+        print(f"No contact found with the name: {name}")
+
+    def delete_contact(self, name):
+        for contact in self.contacts:
+            if contact['name'].lower() == name.lower():
+                self.contacts.remove(contact)
+                print(f"Contact deleted successfully: {name}")
+                return
+        print(f"No contact found with the name: {name}")
+
+def contact_book_app():
+    contact_book = ContactBook()
+
+    while True:
+        print("\n===== Contact Book Menu =====")
+        print("1. Add Contact")
+        print("2. View Contact List")
+        print("3. Search Contact")
+        print("4. Update Contact")
+        print("5. Delete Contact")
+        print("6. Exit")
+
+        choice = input("Enter your choice (1-6): ")
+
+        if choice == "1":
+            name = input("Enter name: ")
+            phone_number = input("Enter phone number: ")
+            email = input("Enter email: ")
+            address = input("Enter address: ")
+            contact_book.add_contact(name, phone_number, email, address)
+        elif choice == "2":
+            contact_book.view_contact_list()
+        elif choice == "3":
+            keyword = input("Enter name or phone number to search: ")
+            contact_book.search_contact(keyword)
+        elif choice == "4":
+            name = input("Enter the name of the contact to update: ")
+            new_phone_number = input("Enter the new phone number: ")
+            new_email = input("Enter the new email: ")
+            new_address = input("Enter the new address: ")
+            contact_book.update_contact(name, new_phone_number, new_email, new_address)
+        elif choice == "5":
+            name = input("Enter the name of the contact to delete: ")
+            contact_book.delete_contact(name)
+        elif choice == "6":
+            print("Exiting the Contact Book application. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 6.")
+
+if __name__ == "__main__":
+    contact_book_app()
+                                  -Md Aquib
